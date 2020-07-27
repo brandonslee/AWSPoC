@@ -1,5 +1,6 @@
 import * as cdk from '@aws-cdk/core';
-import * as iam from '@aws-cdk/aws-iam'
+import * as iam from '@aws-cdk/aws-iam';
+import * as dynamodb from '@aws-cdk/aws-dynamodb';
 
 export class CdkStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -46,6 +47,24 @@ export class CdkStack extends cdk.Stack {
       'arn:aws:iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs'));
 
     
+    // DynamoDB creation
+    const ddb1 = new dynamodb.Table(this, 'MBPTicketOrder', {
+      tableName: 'MBPTicketOrder',  // explicit table name
+      partitionKey: { 
+        name: 'orderID',
+        type: dynamodb.AttributeType.NUMBER },
+      readCapacity: 5,
+      writeCapacity: 5,
+    });
+
+    const ddb2 = new dynamodb.Table(this, 'MBPTicketList', {
+      tableName: 'MBPTicketList', // explicit table name
+      partitionKey: {
+        name: 'ticketID',
+        type: dynamodb.AttributeType.NUMBER },
+      readCapacity: 5,
+      writeCapacity: 5,
+    });
     
   }
 }
