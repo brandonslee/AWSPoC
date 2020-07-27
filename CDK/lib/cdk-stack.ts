@@ -8,8 +8,8 @@ export class CdkStack extends cdk.Stack {
     // The code that defines your stack goes here
     // Create IAM Role for AppSync to access DynamoDB
 
-    // IAM role creation
-    // Level2 Construct
+    // IAM role creation - Level2 Construct
+    // AppSync to DynamoDB
     const role = new iam.Role(this, "MBPDynamoDBAccess", {
       assumedBy: new iam.ServicePrincipal('appsync.amazonaws.com'),
     });
@@ -38,6 +38,7 @@ export class CdkStack extends cdk.Stack {
     });
     role.attachInlinePolicy(policy);
 
+    // AppSync to CloudWatch
     const role2 = new iam.Role(this, 'MBPCloudWatchLogging', {
       assumedBy: new iam.ServicePrincipal('appsync.amazonaws.com'),
     })
